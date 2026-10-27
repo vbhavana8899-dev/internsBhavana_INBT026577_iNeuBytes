@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Recommender</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; background: #121212; color: #eee; }
+        h1 { color: #ff6b6b; }
+        input { width: 70%; padding: 10px; font-size: 16px; border-radius: 6px; border: none; }
+        button { padding: 10px 16px; font-size: 16px; border-radius: 6px; border: none; background: #ff6b6b; color: white; cursor: pointer; }
+        #suggestions { margin-top: 8px; }
+        .suggestion { padding: 6px; cursor: pointer; background: #1e1e1e; margin-bottom: 4px; border-radius: 4px; }
+        .suggestion:hover { background: #333; }
+        #results { margin-top: 20px; }
+        .movie-card { background: #1e1e1e; padding: 12px; margin-bottom: 8px; border-radius: 6px; }
+        .movie-title { font-weight: bold; }
+        .movie-genres { color: #aaa; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>🎬 Movie Recommender</h1>
+    <p>Type a movie name, pick it from the list, and get similar movies by genre.</p>
 
+    <input type="text" id="searchBox" placeholder="Search a movie...">
+    <button onclick="getRecommendations()">Recommend</button>
+
+    <div id="suggestions"></div>
+    <div id="results"></div>
+
+    <script>
+        const searchBox = document.getElementById("searchBox");
+        const suggestionsDiv = document.getElementById("suggestions");
+        const resultsDiv = document.getElementById("results");
+        let selectedTitle = "";
+
+        searchBox.addEventListener("input", async () => {
+            const query = searchBox.value.trim();
+            suggestionsDiv.innerHTML = "";
+            if (query.length < 2) return;
+
+            const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+            const titles = await res.json();
+
+            titles.forEach(title => {
+                const div = document.createElement("div");
+                div.className = "suggestion";
+                div.textContent = title;
+                div.onclick = () => {
+                    searchBox.value = title;
+                    selectedTitle = title;
+                    suggestionsDiv.innerHTML = "";
+                };
+                suggestionsDiv.appendChild(div);
+            });
+        });
+
+        async function getRecommendations() {
+            const title = selectedTitle || searchBox.value.trim();
+            if (!title) return;
+
+            resultsDiv.innerHTML = "Loading...";
+            const res = await fetch(`/api/recommend?title=${encodeURIComponent(title)}`);
+            const data = await res.json();
+
+            if (data.error) {
+                resultsDiv.innerHTML = `<p style="color:red">${data.error}</p>`;
+                return;
+            }
+
+            resultsDiv.innerHTML = `<h3>Because you liked "${data.title}":</h3>`;
+            data.recommendations.forEach(movie => {
+                const card = document.createElement("div");
+                card.className = "movie-card";
+                card.innerHTML = `<div class="movie-title">${movie.title}</div><div class="movie-genres">${movie.genres}</div>`;
+                resultsDiv.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
