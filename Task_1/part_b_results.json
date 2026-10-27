@@ -1,0 +1,13 @@
+{
+  "model_name": "Customized_CNN",
+  "total_params": 6529354,
+  "epochs": 35,
+  "training_time_sec": 26938.252788066864,
+  "final_train_accuracy": 0.9153777956962585,
+  "final_val_accuracy": 0.8984000086784363,
+  "test_accuracy": 0.8855999708175659,
+  "test_loss": 0.36517849564552307,
+  "precision_macro": 0.8859104168692987,
+  "recall_macro": 0.8855999999999999,
+  "f1_macro": 0.884392953767111
+}
