@@ -1,0 +1,56 @@
+Task 1: Computer Vision using CNN Models
+
+Name: Safa Anium Regd. No.: INBT022841 Course ID: AIINB10726
+
+Overview
+
+This folder implements both parts of Task 1 on the CIFAR-10 dataset:
+
+Part A — a traditional, un-regularized CNN baseline.
+Part B — a customized CNN with batch normalization, dropout, an extra conv block, data augmentation, and a learning-rate schedule, aimed at measurably beating Part A.
+Both parts share the exact same random seed and train/val/test split (data_utils.py), so the comparison between them is fair.
+
+Files
+
+File	Purpose
+data_utils.py	Loads CIFAR-10, normalizes it, and creates the fixed train/val/test split used by both parts
+eval_utils.py	Shared metric reporting, confusion matrix plotting, training-curve plotting
+part_a_traditional_cnn.py	Builds, trains, and evaluates the baseline CNN
+part_b_customized_cnn.py	Builds, trains, and evaluates the improved CNN
+compare_models.py	Prints the final side-by-side comparison table
+requirements.txt	Python dependencies
+How to run (in VS Code / terminal)
+
+# 1. Create and activate a virtual environment (recommended)
+python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # macOS/Linux
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Run Part A first (creates part_a_results.json + the saved model)
+python part_a_traditional_cnn.py
+
+# 4. Run Part B (automatically compares itself to Part A's results file)
+python part_b_customized_cnn.py
+
+# 5. Print the final comparison table for your report
+python compare_models.py
+Each script also saves:
+
+training_curves_<model>.png — training vs validation accuracy/loss
+confusion_matrix_<model>.png — confusion matrix over the 10 CIFAR-10 classes
+part_<a|b>_model_summary.txt — full Keras architecture printout (use this as your architecture diagram, or paste the layer list into draw.io/Lucidchart for a nicer visual)
+part_<a|b>_results.json — all numeric results in one place for your Google Doc report
+Architecture summary
+
+Part A (Traditional CNN): 3 conv blocks (64→128→256 filters, two conv layers each) with ReLU + max pooling, followed by a 512-unit dense layer. No batch norm, dropout, or augmentation — this is the clean baseline.
+
+Part B (Customized CNN): Same conv-block philosophy but deeper (adds a 4th block up to 512 filters), with batch normalization after every conv layer, dropout for regularization, on-the-fly data augmentation (flip/rotation/zoom), and a ReduceLROnPlateau learning-rate schedule.
+
+Success thresholds
+
+Part A: ≥ 70% test accuracy on CIFAR-10.
+Part B: beats Part A's test accuracy by ≥ 3 percentage points.
+Run the scripts and copy the printed numbers into your Google Doc report along with the generated PNGs.
