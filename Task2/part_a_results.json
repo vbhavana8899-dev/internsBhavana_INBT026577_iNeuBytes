@@ -1,0 +1,27 @@
+{
+  "vocab_size": 10000,
+  "train_class_distribution": {
+    "positive": 798,
+    "negative": 802,
+    "total": 1600
+  },
+  "test_class_distribution": {
+    "positive": 202,
+    "negative": 198,
+    "total": 400
+  },
+  "logistic_regression": {
+    "accuracy": 0.815,
+    "precision_macro": 0.8157051282051282,
+    "recall_macro": 0.8152315231523153,
+    "f1_macro": 0.8149583656322672,
+    "training_time_sec": 0.02270340919494629
+  },
+  "svm": {
+    "accuracy": 0.86,
+    "precision_macro": 0.86,
+    "recall_macro": 0.86003600360036,
+    "f1_macro": 0.8599964999124978,
+    "training_time_sec": 0.019642353057861328
+  }
+}
