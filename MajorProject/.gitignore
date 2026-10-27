@@ -1,1 +1,8 @@
-
+venv/
+__pycache__/
+*.pyc
+data/ml-25m/ratings.csv
+data/ml-25m/genome-scores.csv
+data/ml-25m/genome-tags.csv
+data/ml-25m/tags.csv
+data/ml-25m/links.csv
