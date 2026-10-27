@@ -1,0 +1,9 @@
+{
+  "total_params": 675137,
+  "training_time_sec": 22.06351399421692,
+  "epochs_run": 6,
+  "accuracy": 0.5875,
+  "precision_macro": 0.5879030035822541,
+  "recall_macro": 0.5877337733773378,
+  "f1_macro": 0.5873736331751599
+}
